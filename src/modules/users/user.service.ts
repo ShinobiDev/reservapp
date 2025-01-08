@@ -13,7 +13,27 @@ export class UserService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
         private loggerService: LoggerService
-    ){}
+    ){
+        this.populateUsers();
+    }
+
+    async populateUsers() {
+        const users: UserDto[] = [
+            {
+                name: "User Test",
+                documento: 80793167,
+                email: "test@test.com",
+                pass: '123456',
+                status_id: 1
+            }
+        ];
+
+        for (const user of users) {
+            
+            await this.createUser(user);
+            
+        }
+    }
 
     async createUser(userDto: UserDto) {
         
@@ -53,11 +73,10 @@ export class UserService {
                 where: { email }
             });
         
-            this.loggerService.info(user);
+            this.loggerService.log(JSON.stringify(user));
             if (!user) {
                 throw new Error("User not found.");
-            }
-    
+            }    
             return user; 
         } catch (error) {
             console.error("Error fetching user by email:", error);
