@@ -56,17 +56,6 @@ export class UserDto {
     pass!: string;
 
     @ApiProperty({
-        name: 'status_id',
-        required: true,
-        description:'Estado del usuario',
-        type: String
-    })
-    @IsNumber()
-    @IsOptional()
-    @IsPositive()
-    status_id?: number;
-    
-    @ApiProperty({
         name: 'delete',
         required: false,
         description:'Campo para validar si el usuario esta eliminado',

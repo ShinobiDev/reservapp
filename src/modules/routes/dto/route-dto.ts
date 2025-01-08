@@ -2,11 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
 
 export class RouteDto {
-
     @ApiProperty({
         name: 'id',
         required: false,
-        description:'Id de la ruta',
+        description: 'Id de la ruta',
         type: Number
     })
     @IsOptional()
@@ -17,7 +16,7 @@ export class RouteDto {
     @ApiProperty({
         name: 'origin_id',
         required: true,
-        description:'Origen de la ruta',
+        description: 'Origen de la ruta',
         type: Number
     })
     @IsNumber()
@@ -28,7 +27,7 @@ export class RouteDto {
     @ApiProperty({
         name: 'destination_id',
         required: true,
-        description:'Origen de la ruta',
+        description: 'Destino de la ruta',
         type: Number
     })
     @IsNumber()
@@ -39,7 +38,7 @@ export class RouteDto {
     @ApiProperty({
         name: 'date',
         required: true,
-        description:'Fecha de la ruta',
+        description: 'Fecha de la ruta',
         type: Date
     })
     @IsString()
@@ -47,50 +46,50 @@ export class RouteDto {
     date!: any;
 
     @ApiProperty({
-        name: 'hora',
+        name: 'hour',  // Cambiar 'hora' a 'hour'
         required: true,
-        description:'Fecha de la ruta',
+        description: 'Hora de la ruta',
         type: String
     })
     @IsString()
     @IsNotEmpty()
-    hora!: string;
+    hour!: string;  // Cambiar a 'hour'
 
     @ApiProperty({
         name: 'create_user_id',
         required: true,
-        description:'Usuario que creo la ruta',
+        description: 'Usuario que creó la ruta',
         type: Number
     })
     @IsNumber()
     @IsNotEmpty()
     @IsPositive()
-    create_user_id!: number;
+    create_user_id?: number;
 
     @ApiProperty({
         name: 'date_create_user_id',
         required: true,
-        description:'Fecha de la ruta',
+        description: 'Fecha de creación de la ruta',
         type: Date
     })
     @IsString()
     @IsNotEmpty()
     date_create_user_id?: any;
-    
+
     @ApiProperty({
         name: 'delete',
         required: false,
-        description:'Campo para validar si el ciudad esta eliminado',
+        description: 'Campo para validar si la ruta está eliminada',
         type: Boolean
     })
     @IsBoolean()
     @IsOptional()
-    delete?: boolean
+    delete?: boolean;
 
     @ApiProperty({
         name: 'delete_user_id',
-        required: true,
-        description:'usuario que elimino la ruta',
+        required: false,
+        description: 'Usuario que eliminó la ruta',
         type: Number
     })
     @IsNumber()
@@ -101,7 +100,7 @@ export class RouteDto {
     @ApiProperty({
         name: 'date_delete_user_id',
         required: true,
-        description:'Fecha de la eliminación de la ruta',
+        description: 'Fecha de eliminación de la ruta',
         type: Date
     })
     @IsString()

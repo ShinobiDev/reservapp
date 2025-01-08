@@ -19,17 +19,17 @@ export class Route {
     hour!: string;
 
     @Column({ type: Number, nullable: false })
-    create_user_id!: number;
+    create_user_id?: number;
 
     @Column({ type: Date, nullable: false })
     date_create_user_id?: any;
 
-    @Column({ type: Boolean, nullable: false, default: false })
+    @Column({ type: Boolean,  default: false })
     delete?: boolean
 
-    @Column({ type: Number, nullable: false })
+    @Column({ type: Number, nullable: true })
     delete_user_id?: number;
 
-    @Column({ type: Date, nullable: false })
-    date_delete_user_id?: any;
+    @Column({ type: Date, nullable: true })
+    date_delete_user_id?: Date;
 }

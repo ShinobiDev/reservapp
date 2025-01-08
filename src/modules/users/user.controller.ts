@@ -1,7 +1,8 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, NotFoundException, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user-dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/v1/users')
 @ApiTags('Usuarios')
@@ -33,11 +34,20 @@ export class UserController {
         status: 200,
         description: 'El usuario se creo con exito'
     })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized'
+    })
+    @ApiResponse({
+        status: 500,
+        description: 'Error Server'
+    })
     createUser(@Body() user: UserDto){
         return this.usersService.createUser(user);
     }
 
     @Get('/:email')
+    @UseGuards(AuthGuard('jwt'))
     async getUserByEmail(@Param('email') email: string) {
         try {
             const user = await this.usersService.getUserByEmail(email);
@@ -48,16 +58,47 @@ export class UserController {
     }
 
     @Get('/:id')
+    @ApiOperation({
+        description: 'Obtener un usuario por medio de su id',
+    })
+    @ApiParam({
+        name: 'id',
+        description: 'Id del usuario',
+        required: true,
+        type: Number        
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Se obtiene el usuario con exito'
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthrized'
+    })
+    @UseGuards(AuthGuard('jwt'))
     getUser(@Param('id') id: number){
         return this.usersService.findOneUser(id);
     }
 
     @Get()
+    @ApiOperation({
+        description: 'Obtener todos los usuarios',
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Se obtienen los usuarios con exito'
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthrized'
+    })
+    @UseGuards(AuthGuard('jwt'))
     getAllUser(){
         return this.usersService.findAllUsers();
     }
 
     @Put()
+    @UseGuards(AuthGuard('jwt'))
     @ApiOperation({
         description: 'Edición de un usuario',
     })
@@ -81,6 +122,10 @@ export class UserController {
     @ApiResponse({
         status: 200,
         description: 'El usuario se creo con exito'
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthrized'
     })
     updateUser(@Body() user: UserDto){
         return this.usersService.updateUser(user);

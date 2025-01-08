@@ -19,9 +19,6 @@ export class User {
     @Column({ type: String, nullable: false })
     pass!: string;
 
-    @Column({ type: Number, nullable: false, default: 1 })
-    status_id?: number;
-
     @Column({ type: String, nullable: false, default: false })
     delete?: boolean;
 
